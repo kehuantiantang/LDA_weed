@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<annotation>
+  <filename>masks_150528_frame1644.png</filename>
+  <size>
+    <width>966</width>
+    <height>1296</height>
+  </size>
+  <object>
+    <name>crop</name>
+    <label>0</label>
+    <bndbox>
+      <xmin>47</xmin>
+      <xmax>474</xmax>
+      <ymin>995</ymin>
+      <ymax>1296</ymax>
+    </bndbox>
+  </object>
+  <object>
+    <name>weed</name>
+    <label>1</label>
+    <bndbox>
+      <xmin>761</xmin>
+      <xmax>812</xmax>
+      <ymin>1150</ymin>
+      <ymax>1228</ymax>
+    </bndbox>
+  </object>
+  <object>
+    <name>weed</name>
+    <label>1</label>
+    <bndbox>
+      <xmin>813</xmin>
+      <xmax>854</xmax>
+      <ymin>389</ymin>
+      <ymax>429</ymax>
+    </bndbox>
+  </object>
+</annotation>
