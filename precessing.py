@@ -194,7 +194,7 @@ def object2patch(xml_path, img_shape):
 
             img_crop = np.concatenate([rgb_crop, np.expand_dims(nir_crop,
                                                                 axis=-1)],
-                                      axis = -1)
+                                      axis = -1) / 255.0
 
             # save file to rgb, nir, npy file
             img_filename = save_filename.replace('png', 'npy') % (counter,
