@@ -53,8 +53,6 @@ def write2ndvi(paths):
         cv2.imwrite(os.path.join(ndvi_path, name), ndvi_image)
 
 
-
-
 if __name__ == '__main__':
     paths = read_image_path('./data/rgb', './data/nir')
     write2ndvi(paths)
