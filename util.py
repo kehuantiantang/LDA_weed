@@ -5,6 +5,12 @@ import sys
 
 
 def read_file(path, split_rate):
+    '''
+    read file from patch directory and split it by split rate
+    :param path:
+    :param split_rate:
+    :return:
+    '''
     x, y = [], []
     with open(path, 'r') as f:
         for line in f:
@@ -29,4 +35,6 @@ def read_file(path, split_rate):
 
 if __name__ == '__main__':
     x_train, y_train, x_test, y_test = read_file('./data/patch/label.txt', 0.8)
+    np.savez("data224.npz", x_train = x_train, y_train = y_train, x_test = x_test, y_test = y_test)
+
     print(x_train.shape, y_train.shape, x_test.shape, y_test.shape)
