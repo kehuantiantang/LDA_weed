@@ -37,9 +37,11 @@ def train_test_data(is_feature = True):
         data = np.load('feature.npz')
         X_train_feature, X_test_feature, y_train, y_test = data['x_train'], data[
             'x_test'], data['y_train'], data['y_test']
+        print('Preparing the data finish!')
         return X_train_feature, y_train, X_test_feature, y_test
     else:
-        data = np.load("data224.npz")
+        data = np.load("data.npz")
+        print('Preparing the data finish!')
         return data['x_train'], data['y_train'], data[
             'x_test'], data['y_test']
 
@@ -59,7 +61,8 @@ def lda():
 
     # np.savez('feature.npz', x_train=X_train_feature, y_train=y_train,  #          x_test=X_test_feature, y_test=y_test)
 
-def result_analysis(y_pred, y_truth):
+def result_analysis(y_pred, y_truth, description = ''):
+    print('-----------------%s------------------' %description)
     print('Test accuracy:', accuracy_score(y_true=y_truth, y_pred=y_pred))
     print('Average Test accuracy:',
           average_precision_score(y_true=y_truth, y_score=y_pred))
@@ -79,21 +82,26 @@ def rbm():
     # More components tend to give better prediction performance, but larger
     # fitting time
     rbm.n_components = 100
-    logistic.C = 6000
+    logistic.C = 50
 
+    X_train = X_train.reshape(X_train.shape[0], -1)
     # Training RBM-Logistic Pipeline
     rbm_features_classifier.fit(X_train, Y_train)
 
-    # Training the Logistic regression classifier directly on the pixel
-    raw_pixel_classifier = clone(logistic)
-    raw_pixel_classifier.C = 100.
-    raw_pixel_classifier.fit(X_train, Y_train)
+    # # Training the Logistic regression classifier directly on the pixel
+    # raw_pixel_classifier = clone(logistic)
+    # raw_pixel_classifier.C = 100.
+    # raw_pixel_classifier.fit(X_train, Y_train)
 
+    X_test = X_test.reshape(X_test.shape[0], -1)
     Y_pred = rbm_features_classifier.predict(X_test)
-    print("Logistic regression using RBM features:\n%s\n" % (
-        metrics.classification_report(Y_test, Y_pred)))
 
-    Y_pred = raw_pixel_classifier.predict(X_test)
+    # print("Logistic regression using RBM features:\n%s\n" % (
+    #     metrics.classification_report(Y_test, Y_pred)))
+
+    # Y_pred = raw_pixel_classifier.predict(X_test)
+
+    result_analysis(Y_pred, Y_test, 'BernoulliRBM')
 
 if __name__ == '__main__':
-    pass
+    rbm()
