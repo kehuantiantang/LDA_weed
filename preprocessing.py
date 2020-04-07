@@ -74,7 +74,7 @@ def write2ndvi(paths):
         _, thre = cv2.threshold(ndvi_image, 13, 255, cv2.THRESH_BINARY)
         thre = thre > thre.mean()
 
-        # remove small object
+        # remove small connected object
         thre = morphology.remove_small_objects(thre, min_size=200,
                                                connectivity=1)
 
@@ -217,35 +217,35 @@ def object2patch(xml_path, img_shape):
             f.write(line_string)
 
 
-# def segment2boundingbox(mask_path):
-#     fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize = (15, 5))
-#     img_0 = cv2.imread(mask_path, cv2.IMREAD_GRAYSCALE) / 255
-#     img_0 = cv2.dilate(img_0, np.ones((3,3),np.uint8),iterations = 2)
-#
-#     #
-#     lbl_0 = label(img_0)
-#     props = regionprops(lbl_0)
-#     boxs = img_0.copy() * 255.0
-#     print(len(props))
-#
-#
-#     for prop in props:
-#         print('Found bbox', prop.bbox)
-#         minr, minc, maxr, maxc = prop.bbox
-#
-#         cv2.rectangle(boxs, (minc, minr), (maxc,maxr),
-#                       (255, 0, 0), 5)
-#
-#
-#     ax1.imshow(img_0)
-#     ax1.set_title('Image')
-#
-#     ax2.imshow(lbl_0)
-#     ax2.set_title('Labeling')
-#
-#     ax3.imshow(boxs)
-#     ax3.set_title('Image with derived bounding box')
-#     plt.show()
+def segment_draw_boundingbox(mask_path):
+    fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize = (15, 5))
+    img_0 = cv2.imread(mask_path, cv2.IMREAD_GRAYSCALE) / 255
+    img_0 = cv2.dilate(img_0, np.ones((3,3),np.uint8),iterations = 2)
+
+    #
+    lbl_0 = label(img_0)
+    props = regionprops(lbl_0)
+    boxs = img_0.copy() * 255.0
+    print(len(props))
+
+
+    for prop in props:
+        print('Found bbox', prop.bbox)
+        minr, minc, maxr, maxc = prop.bbox
+
+        cv2.rectangle(boxs, (minc, minr), (maxc,maxr),
+                      (255, 0, 0), 5)
+
+
+    ax1.imshow(img_0)
+    ax1.set_title('Image')
+
+    ax2.imshow(lbl_0)
+    ax2.set_title('Labeling')
+
+    ax3.imshow(boxs)
+    ax3.set_title('Image with derived bounding box')
+    plt.show()
 
 
 if __name__ == '__main__':
